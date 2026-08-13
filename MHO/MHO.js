@@ -1,39 +1,43 @@
-const leftArrow = document.getElementById("left_arrow");
-const rightArrow = document.getElementById("right_arrow");
-const organizationText = document.getElementById("text");
-const image = document.getElementById("image");
-let imageArray = ["NAMI", "AIM", "ADAA"];
-let counter = 1;
 
-rightArrow.addEventListener("click", function(){
-    image.src = "Images/" + imageArray[counter] + ".png";
-    counter ++;
-    if(counter > 2){
-        counter = 0;
+const states = [
+    document.getElementById("state1"),
+    document.getElementById("state2"),
+    document.getElementById("state3")
+];
+
+const nextButton = document.getElementById("Next");
+const previousButton = document.getElementById("Previous");
+
+let current = 0;
+
+function showCurrentState() {
+    for (let i = 0; i < states.length; i++) {
+        if (i === current) {
+            states[i].style.display = "block";
+        } else {
+            states[i].style.display = "none";
+        }
     }
-    setText();
-})
+}
 
-leftArrow.addEventListener("click", function(){
-    image.src = "Images/" + imageArray[counter] + ".png";
-    counter --;
-    if(counter < 0){
-        counter = 2;
+nextButton.addEventListener("click", function () {
+    current = current + 1;
+
+    if (current > states.length - 1) {
+        current = 2;
     }
-    setText();
-})
 
-function setText(){
+    showCurrentState();
+});
 
-if(counter == 1){
-    organizationText.textContent = "This is organization #1";
-}
-else if(counter == 2){
-    organizationText.textContent = "This is organization #2";
-}
+previousButton.addEventListener("click", function () {
+    current = current - 1;
 
-else if(counter == 0){
-    organizationText.textContent = "This is organization #3";
-}
-}
+    if (current < 0) {
+        current = 0;
+    }
 
+    showCurrentState();
+});
+
+showCurrentState();
